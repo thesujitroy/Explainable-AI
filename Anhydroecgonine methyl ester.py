@@ -60,23 +60,23 @@ pos4 = pd.DataFrame()
 pos5 = pd.DataFrame()
 pos6 = pd.DataFrame()
 #cocaine["client_pk"]= position1[position1['testable']== 'Cocaine'].client_pk
-x = position1[position1['testable']== 'Cannabinol']
+x = position1[position1['testable']== 'Anhydroecgonine methyl ester']
 pos1[['instruction_fnumber', 'value', 'sample_dye_line_length']] = x[['instruction_fnumber', 'value', 'sample_dye_line_length']]
-# = position1[position1['testable']== 'Cannabinol'].value
+# = position1[position1['testable']== 'Anhydroecgonine methyl ester'].value
 
-y = position2[position2['testable']== 'Cannabinol']
+y = position2[position2['testable']== 'Anhydroecgonine methyl ester']
 pos2[['instruction_fnumber', 'value1', 'sample_dye_line_length']] = y[['instruction_fnumber', 'value', 'sample_dye_line_length']]
 
-z = position3[position3['testable']== 'Cannabinol']
+z = position3[position3['testable']== 'Anhydroecgonine methyl ester']
 pos3[['instruction_fnumber', 'value2', 'sample_dye_line_length']] = z[['instruction_fnumber', 'value', 'sample_dye_line_length']]
 
-a = position4[position4['testable']== 'Cannabinol']
+a = position4[position4['testable']== 'Anhydroecgonine methyl ester']
 pos4[['instruction_fnumber', 'value3', 'sample_dye_line_length']] = a[['instruction_fnumber', 'value', 'sample_dye_line_length']]
 
-b = position5[position5['testable']== 'Cannabinol']
+b = position5[position5['testable']== 'Anhydroecgonine methyl ester']
 pos5[['instruction_fnumber', 'value4', 'sample_dye_line_length']] = b[['instruction_fnumber', 'value', 'sample_dye_line_length']]
 
-c = position6[position6['testable']== 'Cannabinol']
+c = position6[position6['testable']== 'Anhydroecgonine methyl ester']
 pos6[['instruction_fnumber', 'value5', 'sample_dye_line_length']] = c[['instruction_fnumber', 'value', 'sample_dye_line_length']]
 
 merged = pd.merge(pos1, pos2, on ='instruction_fnumber', how = 'left')
@@ -90,7 +90,7 @@ merged = merged.drop_duplicates()
 
 merged = merged.merge(pos6, on ='instruction_fnumber', how = 'left')
 merged = merged.drop_duplicates()
-merged.to_csv('merged_Cannabinol.csv',index=False)
+merged.to_csv('merged_Anhydroecgonine.csv',index=False)
 fig = px.parallel_coordinates(merged, color=merged.index, labels={"index": "client number",
                 "value": "value", "value1": "value1",
                 "value2": "value2", "value3": "value3", "value4": "value4","value5": "value5",},

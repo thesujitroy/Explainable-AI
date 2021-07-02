@@ -6,19 +6,26 @@ Created on Sun Jun 20 20:46:00 2021
 """
 
 import pandas as pd
+import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
+from scipy import stats
+from scipy.stats import norm, skew
+import numpy as np
+from sklearn import metrics
+from sklearn.metrics import accuracy_score
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error
 
 
-
-dataset = pd.read_csv('sujit_data_export.csv', sep=',')
+dataset = pd.read_csv('sujit_data_export.csv', sep=',') 
 value = []
 for i in dataset['result']:
     if i == 'ND':
         y = 0
     if i == 'NT':
         y = 0
-    else:
+    else: 
        for s in i.split():
            if s.isdigit():
                y = int(s)
@@ -53,24 +60,24 @@ pos4 = pd.DataFrame()
 pos5 = pd.DataFrame()
 pos6 = pd.DataFrame()
 #cocaine["client_pk"]= position1[position1['testable']== 'Cocaine'].client_pk
-x = position1[position1['testable']== 'Cocaine']
-pos1[['instruction_fnumber', 'value']] = x[['instruction_fnumber', 'value']]
+x = position1[position1['testable']== 'Benzoylecgonine']
+pos1[['instruction_fnumber', 'value', 'sample_dye_line_length']] = x[['instruction_fnumber', 'value', 'sample_dye_line_length']]
 # = position1[position1['testable']== 'Cocaine'].value
 
-y = position2[position2['testable']== 'Cocaine']
-pos2[['instruction_fnumber', 'value1']] = y[['instruction_fnumber', 'value']]
+y = position2[position2['testable']== 'Benzoylecgonine']
+pos2[['instruction_fnumber', 'value1', 'sample_dye_line_length']] = y[['instruction_fnumber', 'value', 'sample_dye_line_length']]
 
-z = position3[position3['testable']== 'Cocaine']
-pos3[['instruction_fnumber', 'value2']] = z[['instruction_fnumber', 'value']]
+z = position3[position3['testable']== 'Benzoylecgonine']
+pos3[['instruction_fnumber', 'value2', 'sample_dye_line_length']] = z[['instruction_fnumber', 'value', 'sample_dye_line_length']]
 
-a = position4[position4['testable']== 'Cocaine']
-pos4[['instruction_fnumber', 'value3']] = a[['instruction_fnumber', 'value']]
+a = position4[position4['testable']== 'Benzoylecgonine']
+pos4[['instruction_fnumber', 'value3', 'sample_dye_line_length']] = a[['instruction_fnumber', 'value', 'sample_dye_line_length']]
 
-b = position5[position5['testable']== 'Cocaine']
-pos5[['instruction_fnumber', 'value4']] = b[['instruction_fnumber', 'value']]
+b = position5[position5['testable']== 'Benzoylecgonine']
+pos5[['instruction_fnumber', 'value4', 'sample_dye_line_length']] = b[['instruction_fnumber', 'value', 'sample_dye_line_length']]
 
-c = position6[position6['testable']== 'Cocaine']
-pos6[['instruction_fnumber', 'value5']] = c[['instruction_fnumber', 'value']]
+c = position6[position6['testable']== 'Benzoylecgonine']
+pos6[['instruction_fnumber', 'value5', 'sample_dye_line_length']] = c[['instruction_fnumber', 'value', 'sample_dye_line_length']]
 
 merged = pd.merge(pos1, pos2, on ='instruction_fnumber', how = 'left')
 merged = merged.drop_duplicates()
@@ -83,7 +90,7 @@ merged = merged.drop_duplicates()
 
 merged = merged.merge(pos6, on ='instruction_fnumber', how = 'left')
 merged = merged.drop_duplicates()
-merged.to_csv('merged.csv',index=False)
+merged.to_csv('Benzoylecgonine.csv',index=False)
 fig = px.parallel_coordinates(merged, color=merged.index, labels={"index": "client number",
                 "value": "value", "value1": "value1",
                 "value2": "value2", "value3": "value3", "value4": "value4","value5": "value5",},

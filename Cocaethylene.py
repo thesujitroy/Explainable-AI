@@ -61,23 +61,23 @@ pos5 = pd.DataFrame()
 pos6 = pd.DataFrame()
 #cocaine["client_pk"]= position1[position1['testable']== 'Cocaine'].client_pk
 x = position1[position1['testable']== 'Cocaethylene']
-pos1[['instruction_fnumber', 'value']] = x[['instruction_fnumber', 'value']]
+pos1[['instruction_fnumber', 'value', 'sample_dye_line_length']] = x[['instruction_fnumber', 'value', 'sample_dye_line_length']]
 # = position1[position1['testable']== 'Cocaethylene'].value
 
 y = position2[position2['testable']== 'Cocaethylene']
-pos2[['instruction_fnumber', 'value1']] = y[['instruction_fnumber', 'value']]
+pos2[['instruction_fnumber', 'value1', 'sample_dye_line_length']] = y[['instruction_fnumber', 'value', 'sample_dye_line_length']]
 
 z = position3[position3['testable']== 'Cocaethylene']
-pos3[['instruction_fnumber', 'value2']] = z[['instruction_fnumber', 'value']]
+pos3[['instruction_fnumber', 'value2', 'sample_dye_line_length']] = z[['instruction_fnumber', 'value', 'sample_dye_line_length']]
 
 a = position4[position4['testable']== 'Cocaethylene']
-pos4[['instruction_fnumber', 'value3']] = a[['instruction_fnumber', 'value']]
+pos4[['instruction_fnumber', 'value3', 'sample_dye_line_length']] = a[['instruction_fnumber', 'value', 'sample_dye_line_length']]
 
 b = position5[position5['testable']== 'Cocaethylene']
-pos5[['instruction_fnumber', 'value4']] = b[['instruction_fnumber', 'value']]
+pos5[['instruction_fnumber', 'value4', 'sample_dye_line_length']] = b[['instruction_fnumber', 'value', 'sample_dye_line_length']]
 
 c = position6[position6['testable']== 'Cocaethylene']
-pos6[['instruction_fnumber', 'value5']] = c[['instruction_fnumber', 'value']]
+pos6[['instruction_fnumber', 'value5', 'sample_dye_line_length']] = c[['instruction_fnumber', 'value', 'sample_dye_line_length']]
 
 merged = pd.merge(pos1, pos2, on ='instruction_fnumber', how = 'left')
 merged = merged.drop_duplicates()
