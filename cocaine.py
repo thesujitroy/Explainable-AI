@@ -38,6 +38,28 @@ urine = dataset[dataset['sample_type__type'] == 'Urine']
 facial_hair = dataset[dataset['sample_type__type'] == 'Facial Hair']
 nails = dataset[dataset['sample_type__type'] == 'Nail Clippings']
 
+scalp_hair['sample_dye_line_length'] = scalp_hair['sample_dye_line_length'].fillna(-1)
+unaffectedsection = []
+for i in scalp_hair['sample_dye_line_length']:
+    if i == -1:
+        unaffectedsection.append(12)
+    elif i > 0 and i < 1.2:
+        unaffectedsection.append(0)
+    elif i>= 1.2 and i < 2.4:
+        unaffectedsection.append(1)
+    elif i>= 2.4 and i < 3.6:
+        unaffectedsection.append(2)
+    elif i>= 3.6 and i < 4.8:
+        unaffectedsection.append(3)
+    elif i>= 4.8 and i < 6.0:
+        unaffectedsection.append(4)
+    elif i>= 6.0 and i < 7.2:
+        unaffectedsection.append(5)
+    else:
+        unaffectedsection.append(6)
+        
+scalp_hair['unaffectedsection'] = unaffectedsection
+
 position1 = scalp_hair[scalp_hair['position'] == 1]
 position2 = scalp_hair[scalp_hair['position'] == 2]
 position3 = scalp_hair[scalp_hair['position'] == 3]
@@ -60,24 +82,24 @@ pos4 = pd.DataFrame()
 pos5 = pd.DataFrame()
 pos6 = pd.DataFrame()
 #cocaine["client_pk"]= position1[position1['testable']== 'Cocaine'].client_pk
-x = position1[position1['testable']== 'Benzoylecgonine']
-pos1[['instruction_fnumber', 'value', 'sample_dye_line_length']] = x[['instruction_fnumber', 'value', 'sample_dye_line_length']]
+x = position1[position1['testable']== 'Cocaine']
+pos1[['instruction_fnumber', 'value', 'unaffectedsection']] = x[['instruction_fnumber', 'value', 'unaffectedsection']]
 # = position1[position1['testable']== 'Cocaine'].value
 
-y = position2[position2['testable']== 'Benzoylecgonine']
-pos2[['instruction_fnumber', 'value1', 'sample_dye_line_length']] = y[['instruction_fnumber', 'value', 'sample_dye_line_length']]
+y = position2[position2['testable']== 'Cocaine']
+pos2[['instruction_fnumber', 'value1', 'unaffectedsection1']] = y[['instruction_fnumber', 'value', 'unaffectedsection']]
 
-z = position3[position3['testable']== 'Benzoylecgonine']
-pos3[['instruction_fnumber', 'value2', 'sample_dye_line_length']] = z[['instruction_fnumber', 'value', 'sample_dye_line_length']]
+z = position3[position3['testable']== 'Cocaine']
+pos3[['instruction_fnumber', 'value2', 'unaffectedsection2']] = z[['instruction_fnumber', 'value', 'unaffectedsection']]
 
-a = position4[position4['testable']== 'Benzoylecgonine']
-pos4[['instruction_fnumber', 'value3', 'sample_dye_line_length']] = a[['instruction_fnumber', 'value', 'sample_dye_line_length']]
+a = position4[position4['testable']== 'Cocaine']
+pos4[['instruction_fnumber', 'value3', 'unaffectedsection3']] = a[['instruction_fnumber', 'value', 'unaffectedsection']]
 
-b = position5[position5['testable']== 'Benzoylecgonine']
-pos5[['instruction_fnumber', 'value4', 'sample_dye_line_length']] = b[['instruction_fnumber', 'value', 'sample_dye_line_length']]
+b = position5[position5['testable']== 'Cocaine']
+pos5[['instruction_fnumber', 'value4', 'unaffectedsection4']] = b[['instruction_fnumber', 'value', 'unaffectedsection']]
 
-c = position6[position6['testable']== 'Benzoylecgonine']
-pos6[['instruction_fnumber', 'value5', 'sample_dye_line_length']] = c[['instruction_fnumber', 'value', 'sample_dye_line_length']]
+c = position6[position6['testable']== 'Cocaine']
+pos6[['instruction_fnumber', 'value5', 'unaffectedsection5']] = c[['instruction_fnumber', 'value', 'unaffectedsection']]
 
 merged = pd.merge(pos1, pos2, on ='instruction_fnumber', how = 'left')
 merged = merged.drop_duplicates()
@@ -90,10 +112,5 @@ merged = merged.drop_duplicates()
 
 merged = merged.merge(pos6, on ='instruction_fnumber', how = 'left')
 merged = merged.drop_duplicates()
-merged.to_csv('Benzoylecgonine.csv',index=False)
-fig = px.parallel_coordinates(merged, color=merged.index, labels={"index": "client number",
-                "value": "value", "value1": "value1",
-                "value2": "value2", "value3": "value3", "value4": "value4","value5": "value5",},
-                             color_continuous_scale=px.colors.diverging.Tealrose,
-                             color_continuous_midpoint=2)
-fig.show()
+merged.to_csv('Cocaine.csv',index=False)
+
