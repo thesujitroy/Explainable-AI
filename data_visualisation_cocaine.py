@@ -213,3 +213,68 @@ sns.violinplot(data=df2, x='x', y='value', hue='variable', split=True, inner='qu
 
 """ data description of dye in specific section 3 in and no dye in specific section
  at all in all hair length removing the zeroes"""
+
+df_dye_nozeroes_s3 = pd.DataFrame()
+df_dye_nozeroes_s3 = af_section1[af_section1['value2']!= 0]  # dye in section 2
+df_dye_nozeroes_s3= df_dye_nozeroes_s3.value2.dropna()
+df_dye_nozeroes_s3.describe()
+
+df_dye_nozeroes_s31 = pd.DataFrame()
+df_dye_nozeroes_s31 = un_section1[un_section1['value2']!= 0]  # dye in section 2
+df_dye_nozeroes_s31= df_dye_nozeroes_s31.value2.dropna()
+df_dye_nozeroes_s31.describe()
+
+df_dye_nozeroes_s32 = pd.DataFrame()
+df_dye_nozeroes_s32 = un_section1_2[un_section1_2['value2']!= 0]  # dye in section 2
+df_dye_nozeroes_s32= df_dye_nozeroes_s32.value2.dropna()
+df_dye_nozeroes_s32.describe()
+
+frames3 = [df_dye_nozeroes_s3, df_dye_nozeroes_s31, df_dye_nozeroes_s32]
+dye_section3 = pd.concat(frames3)
+dye_section3.describe()
+###############################################################
+
+
+
+nodye_nozeroes_s33 = pd.DataFrame()
+nodye_nozeroes_s33 = un_section1_3[un_section1_3['value2']!= 0] # nodye in section 2
+nodye_nozeroes_s33= nodye_nozeroes_s33.value2.dropna()
+#nodye_nozeroes_s23['value'].describe()
+
+nodye_nozeroes_s34 = pd.DataFrame()
+nodye_nozeroes_s34 = un_section1_4[un_section1_4['value2']!= 0] # nodye in section 2
+nodye_nozeroes_s34= nodye_nozeroes_s34.value2.dropna()
+#nodye_nozeroes_s24['value'].describe()
+
+nodye_nozeroes_s35 = pd.DataFrame()
+nodye_nozeroes_s35 = un_section1_5[un_section1_5['value2']!= 0] # nodye in section 2
+nodye_nozeroes_s35= nodye_nozeroes_s35.value2.dropna()
+
+nodye_nozeroes_s36 = pd.DataFrame()
+nodye_nozeroes_s36 = un_section1_6[un_section1_6['value2']!= 0] # nodye in section 2
+nodye_nozeroes_s36= nodye_nozeroes_s36.value2.dropna()
+
+frames31 = [nodye_nozeroes_s33, nodye_nozeroes_s34, nodye_nozeroes_s35, nodye_nozeroes_s36]
+no_dye_section3 = pd.concat(frames31)
+no_dye_section3.describe()
+
+x = dye_section3
+y = no_dye_section3
+x = np.log10(x)
+y = np.log10(y)
+plt.hist(x, bins= 'auto', facecolor='g', alpha=0.5, label='nodye')
+plt.hist(y, bins = 'auto', facecolor='r', alpha=0.5, label='dye')
+plt.xlabel('log10 of quantity')
+plt.ylabel('frequency')
+plt.title('Histogram of dye vs no dye')
+plt.legend(loc='upper right')
+plt.show()
+
+nodyes3_all = pd.DataFrame()
+nodyes3_all = nodye[nodye['value2']!= 0] # nodye in section 2
+nodyes3_all= nodyes3_all.value1.dropna()
+nodyes3_all.describe()
+
+frames31 = [no_dye_section3, nodyes3_all]
+no_dye_section2all = pd.concat(frames31)
+no_dye_section2all.describe()
