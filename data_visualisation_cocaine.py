@@ -14,7 +14,7 @@ import numpy as np
 merged = pd.read_csv('cocaine.csv', sep=',')
 unaffectedsection = merged['unaffectedsection']
 merged = merged.drop(['unaffectedsection', 'unaffectedsection1', 'unaffectedsection2', 'unaffectedsection3', 'unaffectedsection4', 'unaffectedsection5'], axis = 1)
-merged_new = merged.apply(lambda x: np.log1p(x) if np.issubdtype(x.dtype, np.number) else x)
+#merged_new = merged.apply(lambda x: np.log1p(x) if np.issubdtype(x.dtype, np.number) else x)
 
 merged_new = merged
 merged_new['unaffectedsection'] = unaffectedsection
@@ -74,23 +74,25 @@ df_nodye_nozeroes_s6.describe()
 """ data description of dye in specific section 1 in and no dye in specific section at all in all hair length removing the zeroes"""
 
 df_dye_nozeroes_s1 = pd.DataFrame()
-df_dye_nozeroes_s1 = af_section1[af_section1['value']!= 0]
+df_dye_nozeroes_s1 = af_section1[af_section1['value']!= 0]  # dye in section 1
 df_dye_nozeroes_s1['value'].describe()
 
+
+
 nodye_nozeroes_s1 = pd.DataFrame()
-nodye_nozeroes_s1 = un_section1[un_section1['value']!= 0]
+nodye_nozeroes_s1 = un_section1[un_section1['value']!= 0] # nodye in section 1
 nodye_nozeroes_s1['value'].describe()
 
 nodye_nozeroes_s12 = pd.DataFrame()
-nodye_nozeroes_s12 = un_section1_2[un_section1_2['value']!= 0]
+nodye_nozeroes_s12 = un_section1_2[un_section1_2['value']!= 0] # nodye in section 1
 nodye_nozeroes_s12['value'].describe()
 
 nodye_nozeroes_s13 = pd.DataFrame()
-nodye_nozeroes_s13 = un_section1_3[un_section1_3['value']!= 0]
+nodye_nozeroes_s13 = un_section1_3[un_section1_3['value']!= 0] # nodye in section 1
 nodye_nozeroes_s13['value'].describe()
 
 nodye_nozeroes_s14 = pd.DataFrame()
-nodye_nozeroes_s14 = un_section1_4[un_section1_4['value']!= 0]
+nodye_nozeroes_s14 = un_section1_4[un_section1_4['value']!= 0] # nodye in section 1
 nodye_nozeroes_s14['value'].describe()
 
 
@@ -124,9 +126,90 @@ sns.violinplot(data=df2, x='x', y='value', hue='variable', split=True, inner='qu
 ------------------------------------------------------------------------------------------------"""
 
 """ data description of dye in specific section 2 in and no dye in specific section
- at all in all hair length removing the zeroes""""""
+ at all in all hair length removing the zeroes"""
 
 
+df_dye_nozeroes_s2 = pd.DataFrame()
+df_dye_nozeroes_s2 = af_section1[af_section1['value1']!= 0]  # dye in section 2
+df_dye_nozeroes_s2= df_dye_nozeroes_s2.value1.dropna()
+df_dye_nozeroes_s2.describe()
+
+df_dye_nozeroes_s21 = pd.DataFrame()
+df_dye_nozeroes_s21 = un_section1[un_section1['value1']!= 0]  # dye in section 2
+df_dye_nozeroes_s21= df_dye_nozeroes_s21.value1.dropna()
+df_dye_nozeroes_s21.describe()
+
+frames1 = [df_dye_nozeroes_s2, df_dye_nozeroes_s21]
+dye_section2 = pd.concat(frames1)
+dye_section2.describe()
+###############################################################
 
 
+nodye_nozeroes_s2 = pd.DataFrame()
+nodye_nozeroes_s2 = un_section1_2[un_section1_2['value1']!= 0] # nodye in section 2
+nodye_nozeroes_s2= nodye_nozeroes_s2.value1.dropna()
+#nodye_nozeroes_s2['value'].describe()
 
+nodye_nozeroes_s23 = pd.DataFrame()
+nodye_nozeroes_s23 = un_section1_3[un_section1_3['value1']!= 0] # nodye in section 2
+nodye_nozeroes_s23= nodye_nozeroes_s23.value1.dropna()
+#nodye_nozeroes_s23['value'].describe()
+
+nodye_nozeroes_s24 = pd.DataFrame()
+nodye_nozeroes_s24 = un_section1_4[un_section1_4['value1']!= 0] # nodye in section 2
+nodye_nozeroes_s24= nodye_nozeroes_s24.value1.dropna()
+#nodye_nozeroes_s24['value'].describe()
+
+
+frames2 = [nodye_nozeroes_s2, nodye_nozeroes_s23, nodye_nozeroes_s24]
+no_dye_section2 = pd.concat(frames2)
+no_dye_section2.describe()
+
+
+x = dye_section2
+y = no_dye_section2
+x = np.log10(x)
+y = np.log10(y)
+plt.hist(x, bins= 'auto', facecolor='g', alpha=0.5, label='nodye')
+plt.hist(y, bins = 'auto', facecolor='r', alpha=0.5, label='dye')
+plt.xlabel('log10 of quantity')
+plt.ylabel('frequency')
+plt.title('Histogram of dye vs no dye')
+plt.legend(loc='upper right')
+plt.show()
+
+nodyes2_all = pd.DataFrame()
+nodyes2_all = nodye[nodye['value1']!= 0] # nodye in section 2
+nodyes2_all= nodyes2_all.value1.dropna()
+nodyes2_all.describe()
+
+frames21 = [no_dye_section2, nodyes2_all]
+no_dye_section2all = pd.concat(frames21)
+no_dye_section2all.describe()
+
+#Violin Plot
+
+x = dye_section2
+y = no_dye_section2all
+x = np.log10(x)
+y = np.log10(y)
+plt.hist(x, bins= 'auto', facecolor='g', alpha=0.5, label='nodye')
+plt.hist(y, bins = 'auto', facecolor='r', alpha=0.5, label='dye')
+plt.xlabel('log10 of quantity')
+plt.ylabel('frequency')
+plt.title('Histogram of dye vs no dye')
+plt.legend(loc='upper right')
+plt.show()
+
+df = pd.DataFrame({'nodye': x, 'dye': y})
+df2 = df.melt().assign(x='vars')
+sns.violinplot(data=df2, x='x', y='value', hue='variable', split=True, inner='quart')
+
+
+"""-------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------"""
+
+""" data description of dye in specific section 3 in and no dye in specific section
+ at all in all hair length removing the zeroes"""
